@@ -18,6 +18,14 @@ exports.getTransactions = async (fromDate, toDate) => {
     }
 };
 
+exports.getTransactionById = async (transactionId) => {
+    try {
+        const transaction = await TransactionModel.findOne({ id: transactionId });
+        return transaction;
+    } catch (error) {
+        throw error;
+    }
+};
 
 exports.importTransactions = async (transactions) => {
     try {
