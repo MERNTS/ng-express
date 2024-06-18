@@ -1,13 +1,23 @@
 const TransactionModel = require('../models/transaction.model');
 
-exports.getTransactions = async () => {
+exports.getTransactions = async (fromDate, toDate) => {
     try {
-        const transactions = await TransactionModel.find({});
+        let query = {};
+
+        if (fromDate && toDate) {
+            query.date = {
+                $gte: new Date(fromDate),
+                $lte: new Date(toDate)
+            };
+        }
+
+        const transactions = await TransactionModel.find(query);
         return transactions;
     } catch (error) {
         throw error; // Re-throw error for handling in controller
     }
 };
+
 
 exports.importTransactions = async (transactions) => {
     try {
